@@ -36,7 +36,7 @@ Adafruit_MCP4725 Library
 ### Modifying the Code
 
 -Find out what the replacement RFID chip address is.  You can do this with a NFC app or use this program.<br/>
--Replace the desired address of the puck in the address array of the RFID.<br/>
+-Replace the desired address of the puck in the address array.<br/>
 
 
 

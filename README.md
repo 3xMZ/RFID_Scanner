@@ -14,7 +14,7 @@ Reads RFID chip and outputs a voltage based on which Puck the RFID belongs to.
 
 ## Getting Started
 
-Program with Arduino Micro settings on the Arduino IDE.
+Program with Arduino Micro settings on the Arduino IDE.<br/>
 Make sure you have the libraries for RFID and the DAC.
 
 ### Prerequisites
@@ -28,15 +28,15 @@ Adafruit_MCP4725 Library
 
 ### Hardware Prerequisites
 
--BWC_Duino
--RFID PCB
--RFID
--5 V Power Supply
+-BWC_Duino<br/>
+-RFID PCB<br/>
+-RFID<br/>
+-5 V Power Supply<br/>
 
 ### Modifying the Code
 
--Find out what the replacement RFID chip address is.  You can do this with a NFC app or use this program.
--Replace the desired address of the puck in the address array of the RFID.
+-Find out what the replacement RFID chip address is.  You can do this with a NFC app or use this program.<br/>
+-Replace the desired address of the puck in the address array of the RFID.<br/>
 
 
 

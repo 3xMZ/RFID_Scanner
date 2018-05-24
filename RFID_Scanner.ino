@@ -8,14 +8,6 @@
 
 
 
-// #define Puck_A[4]={0x80, 0x86, 0x0B, 0xB6}
-// #define Puck_B[4] {0x40, 0x9C, 0x3E, 0xB6}
-// #define Puck_C[4] {0x80, 0x1C, 0x0A, 0xB6}
-// #define Puck_D[4] {0x80, 0x27, 0x09, 0xB6}
-// #define Puck_E[4] {0x30, 0x2C, 0x0A, 0xB6}
-// #define Puck_F[4] {0x00, 0x7D, 0x3E, 0xB6}
-
-
 #include <avr/pgmspace.h>
 #include <Wire.h>
 #include <SPI.h>
@@ -38,39 +30,16 @@ Adafruit_MCP4725 DAC_1;
 char Puck_Names[6][6] = {"Puck_A","Puck_B","Puck_C","Puck_D","Puck_E","Puck_F"};
 int Output_values[6] ={4095,3685,3276,2866,2457,2047};
 
-// const byte Pucks[][6] PROGMEM = 
-// {
-//     {0x80, 0x86, 0x0B, 0xB6},//A
-//     {0x40, 0x9C, 0x3E, 0xB6},//B
-//     {0x80, 0x1C, 0x0A, 0xB6},//C
-//     {0x80, 0x27, 0x09, 0xB6},//D
-//     {0x30, 0x2C, 0x0A, 0xB6},//E
-//     {0x00, 0x7D, 0x3E, 0xB6} //F
-// };
-
-// const byte Pucks[][7] PROGMEM = 
-// {
-//     {0x04, 0x3A, 0xEC, 0x32, 0x04, 0x4C, 0x81}, //0
-//     {0x04, 0x09, 0xF1, 0x32, 0x09, 0x4C, 0x81}, //1
-//     {0x04, 0x43, 0xEC, 0x32, 0x04, 0x4C, 0x81}, //2
-//     {0x04, 0x00, 0xF1, 0x32, 0x00, 0x4C, 0x81}  //3
-// };
-
 const byte Pucks[6][7] PROGMEM = 
 {
     {0x04, 0xE6, 0xF2, 0x32, 0xED, 0x4C, 0x80}, //A
     {0x04, 0x49, 0xED, 0x32, 0xED, 0x4C, 0x81}, //B
-    //{0x04, 0x71, 0x68, 0xEA, 0x2F, 0x4D, 0x81}, //C broke
     {0x04, 0x9B, 0xF2, 0x32, 0xED, 0x4C, 0x80}, //C
     {0x04, 0x51, 0xED, 0x32, 0xED, 0x4C, 0x81}, //D
     {0x04, 0xF6, 0xF2, 0x32, 0xED, 0x4C, 0x80}, //E
-    {0x04, 0x4B, 0xEC, 0x32, 0xED, 0x4C, 0x81}, //F
+    {0x04, 0x4B, 0xEC, 0x32, 0xED, 0x4C, 0x81} //F
 
 };
-
-
-
-
 
 
 void setup(void) {
@@ -84,7 +53,6 @@ void setup(void) {
     // configure board to read RFID tags
     nfc.SAMConfig();
     Serial.println("Waiting for an ISO14443A Card ...");
-    //pinMode(PWM_out,OUTPUT);
     DAC_1.begin(0x60);
     DAC_1.setVoltage(0, false);
 }
@@ -92,12 +60,6 @@ void setup(void) {
 void loop(void) {
     
     Serial.println("Reading....");
-    // byte test[4] = {read_RFID()};
-    // Serial.println("int value of UID");
-    // for (int k;k<4;k++){
-
-    //     Serial.println(test[k]);
-    // }
     read_RFID();
     delay(1000);
 
@@ -106,9 +68,8 @@ void loop(void) {
 void read_RFID() {
 
     uint8_t success;
-    //byte uid[4] = { 0, 0, 0, 0 };  // Buffer to store the returned UID
     byte uid[7] = { 0, 0, 0, 0, 0, 0, 0};  // Buffer to store the returned UID
-    uint8_t uidLength;                // Length of the UID (4 or 7 bytes depending on ISO14443A card type)
+    uint8_t uidLength;                // Length of the UID (4 or 7 bytes depending on ISO14443A card type).  For robot, it's 7.
 
     // Wait for an NTAG203 card.  When one is found 'uid' will be populated with
     // the UID, and uidLength will indicate the size of the UUID (normally 7)
@@ -127,12 +88,9 @@ void read_RFID() {
                     Serial.print(Puck_Names[i][k]);
                 }                
                 Serial.print(" found!\n");
-                //analogWrite(PWM_out,Output_values[i]);
                 DAC_1.setVoltage(Output_values[i], false);
             }
         }
     }
-
-    //return *uid;
 
 }
